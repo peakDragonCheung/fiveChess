@@ -1,5 +1,7 @@
 .chessBoard{
-    border: 1px solid #f7c128;
+    /* border: 2px solid white; */
     width: 600px;
     height: 600px;
+    text-align: left;
+    font-size: 0;
 }

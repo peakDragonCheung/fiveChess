@@ -1,0 +1,33 @@
+.single-chess{
+    width: 30px;
+    display: inline-block;
+    height: 30px;
+    position: relative;
+    text-align: center;
+}
+.single-chess .after {
+    content: ' ';
+    border: 1px solid white;
+    position: absolute;
+    left: 14px;
+    height: 28px;
+}
+.single-chess .before {
+    content: ' ';
+    border: 1px solid white;
+    position: absolute;
+    width: 28px;
+}
+.wb_chess{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    /* border: 1px solid black; */
+    border-radius: 50%;
+    background: black;
+    position: absolute;
+    z-index: 1;
+    left: 4px;
+    top: -9px;
+    cursor: pointer;
+}
