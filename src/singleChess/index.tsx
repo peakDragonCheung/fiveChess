@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.css';
 import {UserContext} from '../chessboard'
 interface SingleProps {
-    rowIndex: Number,
-    colIndex: Number,
+    rowIndex: number,
+    colIndex: number,
     colNum: number,
     user: ''|'A' | 'B', // A Or B
-    Id: string
+    Id: string,
+    moveChess: Function
 }
 
 interface userChess {
@@ -18,39 +19,35 @@ interface userProp {
     setCurrentUser: () => void
   } 
 const Chessboard : React.FC<SingleProps> = props => {
-    const [userC, setUser] = useState<''|'A' | 'B'>(props.user);
+    // 为了用hook 而用，其实可以不用，为了试试新功能。
+    // const [userC, setUser] = useState<''|'A' | 'B'>(props.user);
     return ( 
         <UserContext.Consumer>
             {
-              function (currentUser: any) {
+              function (parentProp: any) {
                   return (<i className="single-chess" id={props.Id}> 
                   {props.colIndex === props.colNum-1 ?null: <span className="before" ></span>}
-                  <Chess userC={userC} handClick={ () => {
-                      if(userC) {
+                  <Chess userC={props.user} handClick={ () => {
+                      if(props.user || parentProp.winUser) {
                           return
                       }
-                      console.log(currentUser);
-                      setUser(currentUser.user);
-                      currentUser.setCurrentUser(currentUser.user === 'A'?'B':'A');
+                      props.moveChess(parentProp.user, props.rowIndex, props.colIndex);
+                      parentProp.setCurrentUser(parentProp.user === 'A'?'B':'A');
                   }} />
                   {props.rowIndex === props.colNum-1 ?null: <span className="after" ></span> } 
               </i>)
               }
-                
-                
             }
-                
             </UserContext.Consumer>
             )
 }
-
 const Chess : React.FC<userChess> = props => {
     const color = {
         'A': 'black',
         'B': 'white',
         '': 'transparent'
-    }
-    const style = {'background' : color [props.userC]};
+    };
+    const style = {'background' : color[props.userC]};
     return (
         <span className="wb_chess" onClick = {props.handClick} 
          style={ style }
